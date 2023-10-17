@@ -1,12 +1,18 @@
 class Konto:
-    def __init__(self, imie, nazwisko, pesel, promo_code = None):
-        self.imie = imie
-        self.nazwisko = nazwisko
+    def __init__(self, name, surname, pesel, promo_code = None):
+        # Setting name and surname
+        self.name = name
+        self.surname = surname
+
+        # Setting pesel
         if len(pesel) != 11:
-            self.pesel = "Niepoprawny pesel!"
+            self.pesel = "Incorrect pesel!"
         else:
             self.pesel = pesel
-        if self.is_promo_code_correct(promo_code):
+        
+        # Setting saldo
+        birth_year = self.determine_birth_year(self.pesel)
+        if self.is_promo_code_correct(promo_code) and self.does_promo_apply(birth_year):
             self.saldo = 50
         else:
             self.saldo = 0
@@ -17,3 +23,23 @@ class Konto:
                 return True
             else:
                 return False
+    
+    def determine_birth_year(self, pesel):
+        if pesel == "Incorrect pesel!":
+            return None
+        else:
+            pesel_birth_year = int(pesel[0:2])
+            pesel_birth_month = int(pesel[2:4])
+            pesel_birth_day = int(pesel[4:6])
+
+            if pesel_birth_month > 12:
+                birth_year = 2000 + pesel_birth_year
+            else:
+                birth_year = 1900 + pesel_birth_year
+            return birth_year
+            
+    def does_promo_apply(self, birth_year):
+        if birth_year is not None and birth_year > 1960:
+            return True
+        else:
+            return False

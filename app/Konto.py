@@ -1,45 +1,24 @@
 class Konto:
-    def __init__(self, name, surname, pesel, promo_code = None):
-        # Setting name and surname
-        self.name = name
-        self.surname = surname
-
-        # Setting pesel
-        if len(pesel) != 11:
-            self.pesel = "Incorrect pesel!"
-        else:
-            self.pesel = pesel
-        
-        # Setting saldo
-        birth_year = self.determine_birth_year(self.pesel)
-        if self.is_promo_code_correct(promo_code) and self.does_promo_apply(birth_year):
-            self.saldo = 50
-        else:
-            self.saldo = 0
-
-    def is_promo_code_correct(self, promo_code):
-        if promo_code is not None:
-            if promo_code.startswith("PROM_") and len(promo_code) == 8:
-                return True
-            else:
-                return False
+    express_fee = 0
     
-    def determine_birth_year(self, pesel):
-        if pesel == "Incorrect pesel!":
-            return None
+    def incoming_transfer(self, amount):
+        if amount > 0:
+            self.saldo = self.saldo + amount
         else:
-            pesel_birth_year = int(pesel[0:2])
-            pesel_birth_month = int(pesel[2:4])
-            pesel_birth_day = int(pesel[4:6])
+            self.saldo = self.saldo
+        return self.saldo
+    
+    def outgoing_transfer(self, amount):
+        if amount > self.saldo or amount <= 0:
+            self.saldo = self.saldo
+        else:
+            self.saldo = self.saldo - amount
+        return self.saldo
 
-            if pesel_birth_month > 12:
-                birth_year = 2000 + pesel_birth_year
-            else:
-                birth_year = 1900 + pesel_birth_year
-            return birth_year
-            
-    def does_promo_apply(self, birth_year):
-        if birth_year is not None and birth_year > 1960:
-            return True
+    def outgoing_express_transfer(self, amount):
+        if amount > self.saldo + self.express_fee or amount <= 0:
+            self.saldo = self.saldo
         else:
-            return False
+            self.saldo = self.saldo - (amount + self.express_fee)
+        return self.saldo
+

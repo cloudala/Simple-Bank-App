@@ -20,6 +20,9 @@ class Konto_Personal(Konto):
             self.saldo = 50
         else:
             self.saldo = 0
+        
+        # Setting history
+        self.history = []
 
     def is_promo_code_correct(self, promo_code):
         if promo_code is not None:

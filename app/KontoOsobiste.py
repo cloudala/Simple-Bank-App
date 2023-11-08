@@ -49,3 +49,19 @@ class Konto_Personal(Konto):
             return True
         else:
             return False
+    
+    def take_loan(self, amount):
+        if len(self.history) < 3:
+            return False
+
+        last_three_transactions = self.history[-3:]
+        last_five_transactions = self.history[-5:]
+
+        if (all(value > 0 for value in last_three_transactions)):
+            self.saldo += amount
+            return True
+        elif (sum(last_five_transactions) > amount):
+            self.saldo += amount
+            return True
+        else:
+            return False

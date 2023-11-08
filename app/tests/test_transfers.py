@@ -164,3 +164,4 @@ class TestBankTransfers(unittest.TestCase):
         enterprise_account.incoming_transfer(100)
         enterprise_account.outgoing_express_transfer(50)
         self.assertEqual(enterprise_account.history, [100, -50, -5], "Outgoing express transfer amount and/or fee hasn't been registered in history!")
+

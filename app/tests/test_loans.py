@@ -39,6 +39,6 @@ class TestLoans(unittest.TestCase):
     
     def test_five(self):
         konto = Konto_Personal(self.name, self.surname, self.pesel)
-        konto.history = [100, 100, 500, 10, 60, 30]
+        konto.history = [100, 100, 500, 10, 60, -30]
         loan_given = konto.take_loan(500)
         self.assertTrue(loan_given)

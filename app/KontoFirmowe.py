@@ -15,3 +15,6 @@ class Konto_Enterprise(Konto):
         
         # Setting saldo
         self.saldo = 0
+
+        # Setting history
+        self.history = []

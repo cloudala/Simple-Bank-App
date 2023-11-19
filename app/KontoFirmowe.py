@@ -18,3 +18,22 @@ class Konto_Enterprise(Konto):
 
         # Setting history
         self.history = []
+    
+    def take_loan(self, amount):
+        if self.is_saldo_valid(amount) and self.pays_zus():
+            self.saldo += amount
+            return True
+        else:
+            return False
+    
+    def is_saldo_valid(self, amount):
+        if self.saldo >= amount*2:
+            return True
+        else:
+            return False
+    
+    def pays_zus(self):
+        if -1775 in self.history:
+            return True
+        else: 
+            return False

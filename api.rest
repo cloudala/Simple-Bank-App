@@ -1,0 +1,8 @@
+POST http://127.0.0.1:5000/api/accounts
+Content-Type: application/json
+
+{
+    "imie": "Jan",
+    "nazwisko": "Kowalski",
+    "pesel": "12345678901"
+}

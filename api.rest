@@ -1,8 +1,40 @@
+# Adding an account to Rejestr_Kont
 POST http://127.0.0.1:5000/api/accounts
 Content-Type: application/json
 
 {
-    "imie": "Jan",
-    "nazwisko": "Kowalski",
+    "name": "Jan",
+    "surname": "Kowalski",
     "pesel": "12345678901"
 }
+
+###
+# Getting the number of accounts in Rejestr_Kont
+GET http://127.0.0.1:5000/api/accounts/count
+
+###
+# Getting account by pesel (account exists)
+GET http://127.0.0.1:5000/api/accounts/12345678901
+
+###
+# Getting account by pesel (account doesn't exist)
+GET http://127.0.0.1:5000/api/accounts/12345678902
+
+###
+# Updating an account (account exists)
+PATCH http://127.0.0.1:5000/api/accounts/12345678901
+Content-Type: application/json
+
+{
+    "name": "Janina",
+    "saldo": 1000
+}
+
+
+###
+# Deleting an account by pesel (account exists)
+DELETE http://127.0.0.1:5000/api/accounts/12345678901
+
+###
+# Deleting an account by pesel (account doesn't exist)
+DELETE http://127.0.0.1:5000/api/accounts/12345678902

@@ -4,6 +4,7 @@ class Rejestr_Kont:
     @classmethod
     def add_account(cls, account):
         cls.accounts.append(account)
+        
 
     @classmethod
     def find_account(cls, pesel):

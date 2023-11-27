@@ -57,3 +57,18 @@ class TestAccountCrud(unittest.TestCase):
     def test_8_delete_account(self):
         response = requests.delete(self.url + "/01310112343")
         self.assertEqual(response.status_code, 404, "Account wasn't deleted correctly!")
+    
+    # Feature 16 - test duplicate account
+    def test_9_post_duplicate_account(self):
+        requests.post(self.url, json = {
+            "name": "Jan",
+            "surname": "Kowalski",
+            "pesel": "23456789012"
+        })
+        response = requests.post(self.url, json = {
+            "name": "Jan",
+            "surname": "Kowalski",
+            "pesel": "23456789012"
+        })
+        self.assertEqual(response.status_code, 409, "Duplicate account was added!")
+    

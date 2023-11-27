@@ -30,3 +30,14 @@ class TestRejestr(unittest.TestCase):
          Rejestr_Kont.add_account(self.konto)
          foundAccount = Rejestr_Kont.find_account(self.pesel)
          self.assertEqual(foundAccount, self.konto, "The account wasn't correctly found!")
+
+    def test_find_nonexistent_account(self):
+         foundAccount = Rejestr_Kont.find_account('01310112343')
+         self.assertEqual(foundAccount, None, "The account wasn't correctly found!")
+     
+    def test_delete_account(self):
+         beginning_number_of_accounts = Rejestr_Kont.how_many_accounts()
+         Rejestr_Kont.add_account(self.konto)
+         Rejestr_Kont.delete_account(self.konto)
+         end_number_of_accounts = Rejestr_Kont.how_many_accounts()
+         self.assertEqual(beginning_number_of_accounts, end_number_of_accounts, "The account wasn't deleted correctly!")

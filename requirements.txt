@@ -1,2 +1,4 @@
 coverage==6.5.0
 parameterized>=0.7.4
+flask>=3.0.0
+requests>=2.31.0

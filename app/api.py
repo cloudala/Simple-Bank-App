@@ -1,3 +1,4 @@
+# Rerun flask server on save: flask --app app/api --debug run --reload
 from flask import Flask, request, jsonify
 from app.RejestrKont import Rejestr_Kont
 from app.KontoOsobiste import Konto_Personal
@@ -31,7 +32,8 @@ def wyszukaj_konto_z_peselem(pesel):
         return jsonify(
             {"name": konto.name, 
              "surname": konto.surname, 
-             "pesel": konto.pesel
+             "pesel": konto.pesel,
+             "saldo": konto.saldo
              }), 200
     else:
         return jsonify({"message": "Account not found!"}), 404
@@ -71,10 +73,9 @@ def send_transfer(pesel):
     if accountExists is None:
         return jsonify({"message": "Account doesn't exist! Transfer can't be executed!"}), 404
     else:
+        transferAmount = dane["amount"]
         if (dane["type"] == "outgoing"):
-            transferAmount = -1*dane["amount"]
             accountExists.outgoing_transfer(transferAmount)
         else:
-            transferAmount = dane["amount"]
             accountExists.incoming_transfer(transferAmount)
-    return jsonify({"message": f"Transfer accepted for execution! {transferAmount}"}), 200
+    return jsonify({"message": f"Transfer accepted for execution!"}), 200

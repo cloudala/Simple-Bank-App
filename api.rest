@@ -58,3 +58,11 @@ Content-Type: application/json
   "amount": 500,
   "type": "incoming"
 }
+
+###
+# Testing the Ministerstwo NIP API - valid NIP
+GET https://wl-api.mf.gov.pl/api/search/nip/8461627563?date=2023-12-01
+
+###
+# Testing the Ministerstwo NIP API - invalid NIP
+GET https://wl-api.mf.gov.pl/api/search/nip/8461627500?date=2023-12-01

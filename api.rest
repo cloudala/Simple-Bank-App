@@ -38,3 +38,23 @@ DELETE http://127.0.0.1:5000/api/accounts/12345678901
 ###
 # Deleting an account by pesel (account doesn't exist)
 DELETE http://127.0.0.1:5000/api/accounts/12345678902
+
+###
+# Sending a transfer request (account exists)
+POST http://127.0.0.1:5000/api/accounts/12345678901/transfer
+Content-Type: application/json
+
+{
+  "amount": 500,
+  "type": "outgoing"
+}
+
+###
+# Sending a transfer request (account doesn't exist)
+POST http://127.0.0.1:5000/api/accounts/12345678902/transfer
+Content-Type: application/json
+
+{
+  "amount": 500,
+  "type": "incoming"
+}

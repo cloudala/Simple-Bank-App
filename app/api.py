@@ -1,3 +1,4 @@
+# Rerun flask server on save: flask --app app/api --debug run --reload
 from flask import Flask, request, jsonify
 from app.RejestrKont import Rejestr_Kont
 from app.KontoOsobiste import Konto_Personal
@@ -9,9 +10,13 @@ app = Flask(__name__)
 def stworz_konto():
     dane = request.json
     print(f"Request to create account with data: {dane}")
-    konto = Konto_Personal(dane["name"], dane["surname"], dane["pesel"])
-    Rejestr_Kont.add_account(konto)
-    return jsonify({"message": "Konto stworzone"}), 201
+    accountExists = Rejestr_Kont.find_account(dane["pesel"])
+    if accountExists is None:
+        konto = Konto_Personal(dane["name"], dane["surname"], dane["pesel"])
+        Rejestr_Kont.add_account(konto)
+        return jsonify({"message": "Account created!"}), 201
+    else:
+        return jsonify({"message": "Account already exists!"}), 409
 
 # Getting number of accounts
 @app.route("/api/accounts/count", methods=['GET'])
@@ -27,7 +32,8 @@ def wyszukaj_konto_z_peselem(pesel):
         return jsonify(
             {"name": konto.name, 
              "surname": konto.surname, 
-             "pesel": konto.pesel
+             "pesel": konto.pesel,
+             "saldo": konto.saldo
              }), 200
     else:
         return jsonify({"message": "Account not found!"}), 404
@@ -57,3 +63,19 @@ def usun_konto_z_peselem(pesel):
             {"message": "Account deleted successfully!"}), 200
     else:
         return jsonify({"message": "Account not found!"}), 404
+
+# Feature 17 -> API transfers
+@app.route("/api/accounts/<pesel>/transfer", methods=['POST'])
+def send_transfer(pesel):
+    dane = request.json
+    print(f"Request to send transfer with data: {dane}")
+    accountExists = Rejestr_Kont.find_account(pesel)
+    if accountExists is None:
+        return jsonify({"message": "Account doesn't exist! Transfer can't be executed!"}), 404
+    else:
+        transferAmount = dane["amount"]
+        if (dane["type"] == "outgoing"):
+            accountExists.outgoing_transfer(transferAmount)
+        else:
+            accountExists.incoming_transfer(transferAmount)
+    return jsonify({"message": f"Transfer accepted for execution!"}), 200

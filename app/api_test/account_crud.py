@@ -20,7 +20,7 @@ class TestAccountCrud(unittest.TestCase):
     def test_2_get_account(self):
         response = requests.get(self.url + "/01310112345")
         self.assertEqual(response.status_code, 200, "Account wasn't found correctly!")
-        expected_data = {"name": self.name, "surname": self.surname, "pesel": self.pesel}
+        expected_data = {"name": self.name, "surname": self.surname, "pesel": self.pesel, "saldo": 0}
         received_data = response.json()
         self.assertDictEqual(expected_data, received_data, "Account wasn't found correctly!")
 
@@ -57,3 +57,18 @@ class TestAccountCrud(unittest.TestCase):
     def test_8_delete_account(self):
         response = requests.delete(self.url + "/01310112343")
         self.assertEqual(response.status_code, 404, "Account wasn't deleted correctly!")
+    
+    # Feature 16 - test duplicate account
+    def test_9_post_duplicate_account(self):
+        requests.post(self.url, json = {
+            "name": "Jan",
+            "surname": "Kowalski",
+            "pesel": "23456789012"
+        })
+        response = requests.post(self.url, json = {
+            "name": "Jan",
+            "surname": "Kowalski",
+            "pesel": "23456789012"
+        })
+        self.assertEqual(response.status_code, 409, "Duplicate account was added!")
+    

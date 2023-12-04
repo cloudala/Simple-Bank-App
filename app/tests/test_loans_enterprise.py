@@ -1,15 +1,17 @@
 import unittest
-
+from unittest.mock import patch
 from ..KontoFirmowe import Konto_Enterprise
 from parameterized import parameterized
 
+@patch("app.KontoFirmowe.Konto_Enterprise.nip_exists")
 class TestLoans(unittest.TestCase):
     # Konto Enterprise
     company_name = "firma"
     nip = "1234567890"
 
     # Feature 13
-    def setUp(self):
+    def setUp(self, nip_exists):
+         nip_exists.return_value = True
          self.konto = Konto_Enterprise(self.company_name, self.nip)
     @parameterized.expand([
         (250, [-100, 100], 500, False, 250), 

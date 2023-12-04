@@ -1,4 +1,7 @@
 from .Konto import Konto
+from datetime import datetime
+import requests
+import os
 
 class Konto_Enterprise(Konto):
     express_fee = 5
@@ -11,7 +14,11 @@ class Konto_Enterprise(Konto):
         if len(nip) != 10:
             self.nip = "Incorrect nip!"
         else:
-            self.nip = nip
+            valid_nip = self.nip_exists(nip)
+            if valid_nip:
+                self.nip = nip
+            else:
+                raise ValueError("Nip has to belong to a registered entity!")
         
         # Setting saldo
         self.saldo = 0
@@ -36,4 +43,15 @@ class Konto_Enterprise(Konto):
         if -1775 in self.history:
             return True
         else: 
+            return False
+
+    @classmethod    
+    def nip_exists(self, nip):
+        gov_url = os.getenv("BANK_APP_MF_URL", "https://wl-test.mf.gov.pl/")
+        today = datetime.today().strftime('%Y-%m-%d')
+        nip_response = requests.get(f"{gov_url}api/search/nip/{nip}?date={today}")
+        print(f"Sending requests to: {nip_response}")
+        if nip_response.status_code == 200:
+            return True
+        else:
             return False

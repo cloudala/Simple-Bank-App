@@ -10,9 +10,10 @@ class TestLoans(unittest.TestCase):
     nip = "1234567890"
 
     # Feature 13
-    def setUp(self, nip_exists):
-         nip_exists.return_value = True
-         self.konto = Konto_Enterprise(self.company_name, self.nip)
+    def setUp(self):
+        with patch("app.KontoFirmowe.Konto_Enterprise.nip_exists") as mock_nip_exists:
+            mock_nip_exists.return_value = True
+            self.konto = Konto_Enterprise(self.company_name, self.nip)
     @parameterized.expand([
         (250, [-100, 100], 500, False, 250), 
         (1200, [-100, 100, 200, -50], 500, False, 1200), 
@@ -20,7 +21,7 @@ class TestLoans(unittest.TestCase):
         (1200, [-1775, 100, -1775, 10, -60, 30], 500, True, 1700) 
     ])
 
-    def test_loan_system(self, saldo, history, amount, expected_loan_outcome, expected_saldo):
+    def test_loan_system(self, nip_exists, saldo, history, amount, expected_loan_outcome, expected_saldo):
         self.konto.saldo = saldo
         self.konto.history = history
         is_loan_given = self.konto.take_loan(amount)

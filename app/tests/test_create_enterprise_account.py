@@ -19,15 +19,15 @@ class TestBankTransfers(unittest.TestCase):
         self.assertEqual(enterprise_account.nip, self.nip, "Nip wasn't saved!")
         self.assertEqual(enterprise_account.saldo, 0, "Saldo isn't equal to 0!")
     
-    def test_nip_with_len_9(self):
+    def test_nip_with_len_9(self, nip_exists):
         enterprise_account = Konto_Enterprise(self.company_name, "123456789")
         self.assertEqual(enterprise_account.nip, "Incorrect nip!", "Nip that is too short was accepted!")
 
-    def test_nip_with_len_11(self):
+    def test_nip_with_len_11(self, nip_exists):
         enterprise_account = Konto_Enterprise(self.company_name, "12345678901")
         self.assertEqual(enterprise_account.nip, "Incorrect nip!", "Nip that is too long was accepted!")
 
-    def test_nip_is_empty(self):
+    def test_nip_is_empty(self, nip_exists):
         enterprise_account = Konto_Enterprise(self.company_name, "")
         self.assertEqual( enterprise_account.nip, "Incorrect nip!", "Empty nip was accepted!")
 

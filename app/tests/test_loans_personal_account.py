@@ -25,6 +25,6 @@ class TestLoans(unittest.TestCase):
 
     def test_loan_system(self, history, amount, expected_loan_outcome, expected_saldo):
         self.konto.history = history
-        is_loan_given = self.konto.take_loan(500)
+        is_loan_given = self.konto.take_loan(amount)
         self.assertEqual(is_loan_given, expected_loan_outcome, "Incorrect loan feedback!")
         self.assertEqual(self.konto.saldo, expected_saldo, "Incorrect saldo!")

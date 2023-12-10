@@ -1,4 +1,3 @@
 [run]
 omit =
     */site-packages/*
-     */app/KontoFirmowe.py

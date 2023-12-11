@@ -1,4 +1,5 @@
 from .Konto import Konto
+from datetime import datetime
 
 class Konto_Personal(Konto):
     express_fee = 1
@@ -74,3 +75,11 @@ class Konto_Personal(Konto):
     def sum_of_last_five_greater_than_amount(self, amount):
         last_five_transactions = self.history[-5:]
         return sum(last_five_transactions) > amount
+
+    # Feature 19
+    def email_account_history(self, email, SMTPConnection):
+        today = datetime.today().strftime('%Y-%m-%d')
+        topic = f"Wyciąg z dnia {today}"
+        message = f"Twoja historia konta to: {self.history}"
+        receiver = email
+        return SMTPConnection.wyslij(topic, message, receiver)

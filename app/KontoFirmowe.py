@@ -55,3 +55,11 @@ class Konto_Enterprise(Konto):
             return True
         else:
             return False
+    
+    # Feature 19
+    def email_account_history(self, email, SMTPConnection):
+        today = datetime.today().strftime('%Y-%m-%d')
+        topic = f"Wyciąg z dnia {today}"
+        message = f"Historia konta Twojej firmy to: {self.history}"
+        receiver = email
+        return SMTPConnection.wyslij(topic, message, receiver)

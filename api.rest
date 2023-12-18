@@ -5,7 +5,7 @@ Content-Type: application/json
 {
     "name": "Jan",
     "surname": "Kowalski",
-    "pesel": "12345678901"
+    "pesel": "12345678903"
 }
 
 ###
@@ -66,3 +66,12 @@ GET https://wl-api.mf.gov.pl/api/search/nip/8461627563?date=2023-12-01
 ###
 # Testing the Ministerstwo NIP API - invalid NIP
 GET https://wl-api.mf.gov.pl/api/search/nip/8461627500?date=2023-12-01
+
+###
+# Feature 20
+# Testing save to database API method
+PATCH http://127.0.0.1:5000/api/accounts/save
+
+###
+# Testing load from database API method
+PATCH http://127.0.0.1:5000/api/accounts/load

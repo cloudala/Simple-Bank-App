@@ -79,3 +79,16 @@ def send_transfer(pesel):
         else:
             accountExists.incoming_transfer(transferAmount)
     return jsonify({"message": f"Transfer accepted for execution!"}), 200
+
+# Feature 20
+# RejestrKont.save endpoint
+@app.route("/api/accounts/save", methods=['PATCH'])
+def save():
+    Rejestr_Kont.save()
+    return jsonify({"message": "Account list saved successfully to database!"}), 200
+
+# RejestrKont.load endpoint
+@app.route("/api/accounts/load", methods=['PATCH'])
+def load():
+    Rejestr_Kont.load()
+    return jsonify({"message": "Account list loaded successfully from database!"}), 200

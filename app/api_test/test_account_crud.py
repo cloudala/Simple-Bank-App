@@ -8,6 +8,10 @@ class TestAccountCrud(unittest.TestCase):
 
     def setUp(self):
         self.url = "http://127.0.0.1:5000/api/accounts"
+    
+    @classmethod
+    def tearDownClass(cls):
+        requests.delete("http://127.0.0.1:5000/api/accounts/23456789012")
 
     def test_1_post_account(self):
         response = requests.post(self.url, json = {

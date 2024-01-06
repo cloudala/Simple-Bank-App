@@ -30,7 +30,7 @@ class Rejestr_Kont:
             cls.accounts.remove(account)
 
     # Feature 20
-    # Load - loads account list to database 
+    # Load - loads account list from database to accounts list
     @classmethod
     def load(cls):
         # Clearing the accounts list
@@ -44,7 +44,7 @@ class Rejestr_Kont:
             account.history = db_account["history"]
             cls.accounts.append(account)
     
-    # Save - saves accounts from database to list
+    # Save - saves accounts from accounts list to database
     @classmethod
     def save(cls) :
         # Clearing the database

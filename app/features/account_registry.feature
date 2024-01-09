@@ -23,14 +23,18 @@ Feature: Account registry
  Scenario: User is able to delete already created account
    Given Account with pesel "89091209875" exists in registry
    When I delete account with pesel: "89091209875"
-   Then Account with pesel "89091209875" does not exists in registry
+   Then Account with pesel "89091209875" does not exist in registry
 
 
  Scenario: User is able to update last name saved in account
    Given Account with pesel "89091209876" exists in registry
-   When I update account with pesel: "89091209876" to last name "wonders"
+   When I update account with pesel: "89091209876" to last name: "wonders"
    Then Account with pesel "89091209876" has surname "wonders"
 
+ Scenario: User is able to delete second already created account
+   Given Account with pesel "89091209876" exists in registry
+   When I delete account with pesel: "89091209876"
+   Then Account with pesel "89091209876" does not exist in registry
 
  Scenario: User is able to load account registry
    Given Number of accounts in registry equals: "0"
@@ -47,5 +51,5 @@ Feature: Account registry
    And Account with pesel "89091209876" exists in registry
    When I delete account with pesel: "89091209875"
    And I delete account with pesel: "89091209876"
-   Then Account with pesel "89091209875" does not exists in registry
-   And Account with pesel "89091209876" does not exists in registry
+   Then Account with pesel "89091209875" does not exist in registry
+   And Account with pesel "89091209876" does not exist in registry

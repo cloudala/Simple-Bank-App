@@ -22,12 +22,11 @@ GET http://127.0.0.1:5000/api/accounts/12345678902
 
 ###
 # Updating an account (account exists)
-PATCH http://127.0.0.1:5000/api/accounts/12345678901
+PATCH http://127.0.0.1:5000/api/accounts/89091209876
 Content-Type: application/json
 
 {
-    "name": "Janina",
-    "saldo": 1000
+    "surname": "wonders"
 }
 
 

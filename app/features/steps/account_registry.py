@@ -64,3 +64,18 @@ def check_updated_surname(context, pesel, last_name):
 def load_account_registry(context):
     load_account_resp = requests.patch(URL  + f"/api/accounts/load")
     assert_equal(load_account_resp.status_code, 200)
+
+# Transfer-specific steps
+@given('Saldo of account with pesel: "{pesel}" equals: "{saldo}"')
+@then('Saldo of account with pesel: "{pesel}" equals: "{saldo}"')
+def check_account_saldo(context, pesel, saldo):
+    saldo_number = float(saldo)
+    get_account_resp = requests.get(URL + f"/api/accounts/{pesel}")
+    assert_equal(get_account_resp.status_code, 200)
+    assert_equal(get_account_resp.json()["saldo"], saldo_number)
+
+@when('I send a transfer with pesel: "{pesel}" using amount: "{saldo}" and type: "{type}"')
+def check_transfer_outcome(context, pesel, saldo, type):
+    json_body = {"amount": float(saldo), "type": type }
+    transfer_resp = requests.post(URL + f"/api/accounts/{pesel}/transfer", json=json_body)
+    assert_equal(transfer_resp.status_code, 200)

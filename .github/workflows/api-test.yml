@@ -42,7 +42,7 @@ jobs:
         flask --app app/api.py run &
     - name: Run API tests
       run: |
-        python -m coverage run -m unittest discover -s app/api_tests
+        cd app/api_test; python -m coverage run -m unittest
     - name: Check code coverage
       run: |
         python -m coverage run -m unittest
